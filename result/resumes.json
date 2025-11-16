@@ -1,0 +1,31 @@
+{
+  "name": "KALEB SAXTON",
+  "area": "Data Science Manager",
+  "summary": "Highly experienced Data Science Manager with a strong background in leading data science and engineering teams, developing advanced predictive models, and driving significant business improvements. Proven ability to enhance ROI, increase conversion rates, optimize efficiency, and reduce profit loss through strategic data analysis and model productionization.",
+  "projects": [
+    {
+      "project_title": "Data Science Manager at Westlake Chemical",
+      "achievements_summary": "Supervised a team of 3 data scientists and 1 data engineer in developing marketing mix models, leading to a 21% ROI improvement on digital marketing spend. Collaborated with product and marketing teams to identify pre-client interactions, increasing conversion rates by 32%. Developed documentation for data science methodologies and standards, and reduced project duplications by 92% through improved coordination."
+    },
+    {
+      "project_title": "Senior Data Scientist at Energy Transfer Partners",
+      "achievements_summary": "Worked closely with the product team to build a production prediction engine in Python, which reduced crude oil profit loss by 16%. Utilized random forest models to study well subsets, optimizing and increasing efficiency by 22%. Compiled and prepared data and reports for stakeholders and functional teams, and recommended over 100 actionable steps that improved automation by 7% and profits by 9% within the first year."
+    },
+    {
+      "project_title": "Data Analyst at CenterPoint Energy",
+      "achievements_summary": "Identified process improvements through client data analysis, leading to an 8% reduction in profit loss. Owned reporting using Python and SQL for energy production, saving 30+ hours of manual work each week. Built ETL infrastructures and delivered data to Redshift, increasing stakeholder decision-making output by 42%. Created and developed 5 new testing strategies and updated documentation."
+    }
+  ],
+  "skills": [
+    "Python (NumPy, Pandas, Scikitlearn, Keras, Flask)",
+    "SQL (Redshift, MySQL, Postgres, NoSQL)",
+    "Git",
+    "Leadership Experience",
+    "Recommendation Engines",
+    "Customer Segmentation",
+    "Propensity Modeling",
+    "Productionizing Models"
+  ],
+  "education": "B.S. in Mathematics and Economics from Rice University, Houston, TX (September 2008 - April 2012).",
+  "interview_questions": "You've demonstrated significant impact in reducing project duplications by 92% and improving automation by 7%. Can you elaborate on your methodology for identifying these inefficiencies and the specific strategies you employed to achieve such substantial improvements?"
+}

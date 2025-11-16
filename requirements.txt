@@ -1,0 +1,6 @@
+langchain-qroq 
+langchain-community
+langchain-core 
+PyMuPDF
+fitz 
+docling

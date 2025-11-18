@@ -187,3 +187,24 @@ Preferred Qualifications:
 - Familiarity with data governance and privacy constraints specific to large-scale language data.
 - Ph.D. in a quantitative field or published research in NLP/Generative Modeling.
 "
+Senior Data Scientist (LLM Focus & Generative AI Research);"
+YGT Tech is hiring a Senior Data Scientist specializing in Large Language Models (LLMs) to lead our Generative AI initiatives. This role requires a blend of advanced statistical analysis, machine learning expertise, and deep knowledge of NLP/NLG architectures (Transformers, RAG). You will be responsible for defining research agendas, designing experiments for human-like conversational models, and translating complex LLM outputs into measurable business insights and product features.
+";"
+Responsibilities:
+- Design, implement, and evaluate custom LLM architectures and fine-tuning strategies (e.g., QLoRA, Reinforcement Learning with Human Feedback - RLHF).
+- Lead research into Prompt Engineering methodologies and context window management to optimize model accuracy and faithfulness (grounding).
+- Collaborate with MLOps and Engineering teams to transition successful LLM prototypes into scalable, production-ready APIs.
+- Utilize classical Data Science techniques (statistics, causal inference) to analyze model performance, identify biases, and benchmark proprietary models against public APIs (e.g., OpenAI, Gemini).
+- Develop and maintain comprehensive documentation detailing LLM architecture, training data curation, and ethical considerations.
+
+Required Qualifications:
+- 5+ years of experience in Data Science, with at least 2 years focused specifically on developing or integrating LLMs/Generative AI systems.
+- Strong theoretical and practical understanding of Transformer models (BERT, GPT, Llama).
+- Expert proficiency in Python (PyTorch/TensorFlow, Hugging Face ecosystem) and robust data manipulation skills (SQL, Pandas).
+- Proven ability to manage full model lifecycle from exploratory research to production deployment.
+
+Preferred Qualifications:
+- Experience with vector databases and RAG (Retrieval-Augmented Generation) system design.
+- Familiarity with data governance and privacy constraints specific to large-scale language data.
+- Ph.D. in a quantitative field or published research in NLP/Generative Modeling.
+"

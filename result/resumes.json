@@ -121,5 +121,72 @@
     ],
     "final_recommendations": "Proceed to interview",
     "score": 8.5
+  },
+  {
+    "name": "Trish Mathers",
+    "area": "IT",
+    "summary": "Innovative and scientifically rigorous graduate with significant data science internship experience to bring to the table.",
+    "skills": [
+      "SAS (base SAS and Macros)",
+      "SQL",
+      "Supervised Learning: linear and logistic regressions, decision trees, support vector machines (SVM)",
+      "Unsupervised Learning: kmeans clustering, principal component analysis (PCA)",
+      "Data Visualization: Excel, Google Sheets"
+    ],
+    "education": "B.S. in Mathematics and Economics from Seattle University",
+    "interview_questions": [
+      "Can you walk me through your experience with SAS and how you applied it to automate refinement of linear regression models?",
+      "How do you stay up-to-date with new developments in machine learning and generative AI research?",
+      "Can you give an example of a time when you had to communicate complex data insights to a non-technical audience?"
+    ],
+    "strengths": [
+      "Significant data science internship experience",
+      "Quantitative modeling and experimentation skills"
+    ],
+    "areas_for_development": [],
+    "important_considerations": [],
+    "final_recommendations": "Proceed to interview",
+    "score": 8.5
+  },
+  {
+    "name": "Yaşar Yiğit Turan",
+    "area": "IT",
+    "summary": "Driven data science enthusiast with a strong foundation in statistics. Actively following advancements in Generative AI and committed to building intelligent, impactful solutions through continuous learning and practical applications.",
+    "skills": [
+      "Python",
+      "SQL",
+      "R",
+      "Pandas",
+      "Numpy",
+      "Scikit-Learn",
+      "Matplotlib",
+      "Seaborn",
+      "Scipy",
+      "Tensorflow",
+      "Pytorch",
+      "Streamlit",
+      "Langchain"
+    ],
+    "education": "Bachelor of Science - Statistics; CGPA: 3.03/4.00, Hacettepe University, Ankara, Turkey, October 2022- June 2026(Expected)",
+    "interview_questions": [
+      "Can you walk me through your experience with Retrieval-Augmented Generation (RAG) systems?",
+      "How do you approach implementing semantic chunking and multi-vector retrieval in a medical chatbot?",
+      "What is your experience with LangChain, and how have you used it to generate structured interview questions?"
+    ],
+    "strengths": [
+      "Relevant experience in data science and statistics",
+      "Strong foundation in Generative AI and NLP techniques",
+      "Ability to design and implement custom LLM architectures"
+    ],
+    "areas_for_development": [
+      "Limited work experience as a Data Scientist Intern",
+      "No direct experience with Goldbergmed gmbH's specific business or industry"
+    ],
+    "important_considerations": [
+      "Missing key information about the candidate's current location and availability for remote work",
+      "Unclear if the candidate has any certifications or training in Generative AI or LLMs"
+    ],
+    "final_recommendations": "Proceed to interview, with a focus on exploring the candidate's experience with RAG systems, semantic chunking, and LangChain.",
+    "score": 8.5
   }
 ]

@@ -1,0 +1,65 @@
+[
+  {
+    "name": "Yaşar Yiğit Turan",
+    "area": "IT",
+    "summary": "Driven data science enthusiast with a strong foundation in statistics, actively following advancements in Generative AI. Possesses strong Python and SQL skills, demonstrated through a robust portfolio of projects involving LLM integration, web application development (Flask, FastAPI, Streamlit), and data analysis. Currently gaining professional experience as a Data Scientist Intern.",
+    "skills": [
+      "Python",
+      "SQL",
+      "R",
+      "Pandas",
+      "Numpy",
+      "Scikit-Learn",
+      "Matplotlib",
+      "Seaborn",
+      "Scipy",
+      "Tensorflow",
+      "Pytorch",
+      "Streamlit",
+      "Langchain",
+      "Power BI",
+      "Tableau",
+      "PostgreSQL",
+      "SPSS",
+      "Minitab",
+      "Git/Github",
+      "ClickUp",
+      "Natural Language Processing (NLP)",
+      "Machine Learning (ML)",
+      "Computer Vision",
+      "Retrieval-Augmented Generation (RAG)",
+      "Prompt Engineering",
+      "Flask",
+      "FastAPI",
+      "Gradio"
+    ],
+    "education": "Bachelor of Science in Statistics from Hacettepe University (expected June 2026), with relevant coursework in Data Mining, Intelligence Optimization Techniques, and Database Management.",
+    "interview_questions": [
+      "The job requires strong knowledge of JavaScript, React, Node.js, and Django. Could you elaborate on your experience with these technologies or how you plan to acquire proficiency in them?",
+      "You have extensive experience with Python web frameworks like Flask and FastAPI. Can you discuss a project where you built a robust web application from scratch, detailing your approach to front-end development and API design?",
+      "The role requires experience with cloud services like AWS or Google Cloud Platform. Do you have any experience deploying applications or managing infrastructure on these platforms? If not, what is your understanding of cloud deployment?",
+      "Your internship is focused on Data Science. How do you see your data science background contributing to a Full Stack Developer role, particularly in building scalable, data-driven solutions?"
+    ],
+    "strengths": [
+      "Strong proficiency in Python and SQL, which are core requirements for the role.",
+      "Extensive project portfolio demonstrating practical application of skills in building web applications (Flask, FastAPI, Streamlit), APIs, and integrating advanced AI models (LLMs, RAG).",
+      "Experience with Git/Github for version control.",
+      "Familiarity with data visualization tools like Power BI and Tableau (desirable qualification).",
+      "Proactive and self-driven, with a clear interest in continuous learning and cutting-edge technologies like Generative AI.",
+      "Experience in developing chatbots and applying NLP techniques."
+    ],
+    "areas_for_development": [
+      "Significant lack of experience in key front-end technologies (JavaScript, React) and specific back-end frameworks (Node.js, Django) explicitly required by the job description.",
+      "No listed experience with cloud services (AWS, Google Cloud Platform), which is a requirement.",
+      "Professional experience is primarily in Data Science, not directly in Full Stack web development.",
+      "Still pursuing a Bachelor's degree, indicating less professional experience overall."
+    ],
+    "important_considerations": [
+      "The candidate's profile is strongly aligned with Data Science/Machine Learning Engineering rather than a traditional Full Stack Developer role.",
+      "While demonstrating strong Python backend and data skills, there's a critical gap in front-end (JavaScript, React) and specific backend frameworks (Node.js, Django) required for the role.",
+      "The candidate is an intern with an expected graduation date in 2026, which might impact immediate availability or long-term commitment."
+    ],
+    "final_recommendations": "The candidate possesses strong analytical and Python development skills, particularly in data science and AI applications, backed by an impressive project portfolio. However, there are significant gaps in core Full Stack technologies (JavaScript, React, Node.js, Django, cloud platforms) required for this specific role. Recommend considering for a Data Scientist or ML Engineer role if available, or requesting clarification on their willingness and plan to rapidly acquire the missing Full Stack skills. Proceeding to an interview for this Full Stack role would require a clear understanding of these gaps and a focus on assessing their learning agility and commitment to bridging them.",
+    "score": 3.1
+  }
+]

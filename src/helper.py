@@ -1,111 +1,136 @@
-# helper.py
 import os
-import json
-import re
-import csv
-import pandas as pd
-from langchain_ollama import ChatOllama
 from docling.document_converter import DocumentConverter
-from langchain_core.prompts import ChatPromptTemplate
-from langchain_core.messages import AIMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
-from typing import Dict, Any, List
+from langchain_core.prompts import ChatPromptTemplate, HumanMessagePromptTemplate, MessagesPlaceholder
+import json
+import pandas as pd
+import csv
+import streamlit as st
+from langchain_ollama import ChatOllama
 
-# --- LLM YÜKLEME FONKSİYONLARI ---
-
-def load_local_llm(model: str, temperature: float): 
-    """Ollama üzerinden yerel LLM'i yükler."""
-    llm = ChatOllama( 
-        model=model, 
-        temperature=temperature
-    ) 
-    return llm
-
-def load_gemini_llm(id_model: str, temperature: float): 
-    """Gemini API üzerinden bulut LLM'i yükler."""
+def load_llm(id_model: str, temperature: float): 
     llm = ChatGoogleGenerativeAI(
-        model=id_model, # Parametre doğru kullanılıyor.
+        model="gemini-2.5-flash",
         temperature=temperature,
         max_tokens=None,
         timeout=None,
         max_retries=2
     )
+    
     return llm 
 
-# --- BELGE VE METİN İŞLEME FONKSİYONLARI ---
+def load_local_llm(model, temperature): 
+    llm = ChatOllama( 
+        model=model, 
+        temperature=temperature
+    ) 
 
-def parse_document_to_markdown(file_path):
-    """PDF gibi bir belgeyi okur ve Markdown içeriğini döndürür."""
-    converter = DocumentConverter()
-    result = converter.convert(file_path)
-    content = result.document.export_to_markdown()
-    return content
-
-# NOT: clean_llm_response fonksiyonu mantıksal olarak gereksizdir ve kaldırılmıştır.
-
-def json_repair(raw_text: str) -> str:
-    """Eksik olabilecek kapanış parantezini (}) ekleyerek ham LLM çıktısını onarır."""
-    text = raw_text.strip()
-    if text.startswith("{") and not text.endswith("}"):
-        text += "}"
-    return text.strip()
-
-def format_result(result):
-    """Ham LLM çıktısından JSON bloğunu regex ile ayıklar, onarır ve sözlüğe çevirir."""
-    cleaned_string = result.strip()
-    
-    if cleaned_string.startswith("'") and cleaned_string.endswith("'"):
-        cleaned_string = cleaned_string[1:-1].strip()
-        
-    match = re.search(r'\{.*\}', cleaned_string, re.DOTALL)
-    
-    if match:
-        final_json_string = match.group(0)
-    else:
-        final_json_string = cleaned_string
-        
-    final_json_string = json_repair(final_json_string) 
-    
-    # Ek temizlik: Kod bloğu işaretlerini kaldır
-    final_json_string = final_json_string.replace('```json', '').replace('```', '').strip()
-
-    return json.loads(final_json_string)
-
-# NOT: extract_structured_json fonksiyonu kaldırılmıştır.
+    return llm 
 
 
-# --- CSV VE JSON VERİ YÖNETİMİ ---
+def format_res(res, return_thinking=False):
+  res = res.strip()
 
-def load_job(csv_path: str) -> str:
-    """CSV'deki en son iş ilanını okur ve prompt formatında döndürür."""
+  if return_thinking:
+    res = res.replace("<think>", "[thinking...] ")
+    res = res.replace("</think>", "\n---\n")
+
+  else:
+    if "</think>" in res:
+      res = res.split("</think>")[-1].strip()
+
+  return res
+
+
+def parse_doc(file_path):
+  converter = DocumentConverter()
+  result = converter.convert(file_path)
+  content = result.document.export_to_markdown()
+  return content
+
+
+def parse_res_llm(response_text: str, required_fields: list) -> dict:
     try:
-        # Pandas ile okuma ve son satırı alma (Basit ve sağlam yol)
-        df = pd.read_csv(csv_path, sep=';', encoding='utf-8')
-        
-        if 'title' not in df.columns:
-            # Düzeltme: Hata mesajı düzeltildi
-            raise ValueError("CSV dosyasında 'title' sütunu bulunamadı. Ayırıcı yanlış olabilir.")
-            
-        job = df.iloc[-1]
-        
-        prompt_text = f"""
-**Job for {job['title']}**
+        #  Remove the reasoning part (<think>...</think>)
+        if "</think>" in response_text:
+            response_text = response_text.split("</think>")[-1].strip()
 
-**Description:**
-{job['description']}
+        # Locates JSON and parses it
+        start_idx = response_text.find('{')
+        end_idx = response_text.rfind('}') + 1
+        if start_idx == -1 or end_idx == 0:
+            raise json.JSONDecodeError("No JSON found in response", response_text, 0)
 
-**Full Details:**
-{job['details']}
-"""
-        return prompt_text.strip()
+        json_str = response_text[start_idx:end_idx]
+        info_cv = json.loads(json_str)
 
-    except FileNotFoundError:
-        return "Error: İş İlanı dosyası bulunamadı."
-    except Exception as e:
-        return f"Error: CSV verisi çözümlenemedi. Detay: {e}" 
+        for field in required_fields:
+            if field not in info_cv:
+                info_cv[field] = []
 
-def save_job_to_csv(data: Dict[str, str], filename: str):
-    """İş tanımı verisini CSV'ye kaydeder."""
+        return info_cv
+
+    except json.JSONDecodeError:
+        #Error interpreting model response
+        return
+
+
+def save_json_cv(new_data, path_json, key_name="name"):
+    # Load existing JSON, if any
+    if os.path.exists(path_json):
+        with open(path_json, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    else:
+        data = []
+
+    if isinstance(data, dict):
+        data = [data]
+
+    # Check if there is already a resume for this person
+    candidates = [entry.get(key_name) for entry in data]
+    if new_data.get(key_name) in candidates:
+        st.warning(f"Resume '{new_data.get(key_name)}' already registered. Ignoring it.")
+        return
+
+    # Add and Save
+    data.append(new_data)
+    with open(path_json, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+
+
+def load_json_cv(path_json):
+    with open(path_json, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def show_cv_result(result: dict):
+    md = f"### 📄 Curriculum Analysis and Summary\n"
+    if "name" in result:
+        md += f"- **Name:** {result['name']}\n"
+    if "area" in result:
+        md += f"- **Area:** {result['area']}\n"
+    if "skills" in result:
+        md += f"- **Skills:** {', '.join(result['skills'])}\n"
+    if "summary" in result:
+        md += f"- **Summary:** {result['summary']}\n"
+    if "interview_questions" in result:
+        md += f"- **Interview questions:**\n"
+        md += "\n".join([f"  - {q}" for q in result["interview_questions"]]) + "\n"
+    if "strengths" in result:
+        md += f"- **Strengths:**\n"
+        md += "\n".join([f"  - {s}" for s in result["strengths"]]) + "\n"
+    if "areas_for_development" in result:
+        md += f"- **Areas for development:**\n"
+        md += "\n".join([f"  - {a}" for a in result["areas_for_development"]]) + "\n"
+    if "important_considerations" in result:
+        md += f"- **Important considerations:**\n"
+        md += "\n".join([f"  - {i}" for i in result["important_considerations"]]) + "\n"
+    if "final_recommendations" in result:
+        md += f"- **Final recommendations:** {result['final_recommendations']}\n"
+    return md
+
+
+def save_job_to_csv(data, filename):
     headers = ['title', 'description', 'details']
     file_exists = os.path.exists(filename)
 
@@ -113,77 +138,47 @@ def save_job_to_csv(data: Dict[str, str], filename: str):
         writer = csv.DictWriter(f, fieldnames=headers, delimiter=';')
         if not file_exists:
             writer.writeheader()
-        writer.writerow(data) 
+        writer.writerow(data)
 
 
-def load_json_cv(path_json: str) -> List[Dict[str, Any]]:
-    """JSON dosyasını güvenli bir şekilde yükler."""
-    if not os.path.exists(path_json):
-        return []
-    try:
-        with open(path_json, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except json.JSONDecodeError:
-        return []
+def load_job(csv_path):
+  try:
+    df = pd.read_csv(csv_path, sep=';', encoding='utf-8')
+    job = df.iloc[-1]
+    prompt_text = f"""
+    **Job for {job['title']}**
 
-def save_json_cv(new_data: Dict[str, Any], path_json: str, key_name="name"):
-    """Yeni özgeçmiş verisini mevcut JSON dosyasına ekler (mükerrer girişi önler)."""
-    
-    data = load_json_cv(path_json) 
+    **Description:**
+    {job['description']}
 
-    if isinstance(data, dict):
-        data = [data]
-    
-    candidates = [entry.get(key_name) for entry in data if isinstance(entry, dict)]
-    candidate_id = new_data.get(key_name)
-    
-    if candidate_id in candidates:
-        print(f"WARNING: Resume '{candidate_id}' already registered. Ignoring addition.")
-        return
-
-    data.append(new_data)
-    with open(path_json, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)    
-    
-    print(f"✅ Resume '{candidate_id}' successfully saved.")
-
-def display_json_table(path_json: str) -> pd.DataFrame:
-    """JSON dosyasını okur ve Pandas DataFrame olarak döndürür (Güvenilir)."""
-    data = load_json_cv(path_json)
-    if not data:
-        return pd.DataFrame()
-        
-    # İyileştirme: pd.json_normalize, iç içe geçmiş listeleri düzgün işler.
-    df = pd.json_normalize(data) 
-    return df
-    
-# --- ANA İŞ AKIŞI FONKSİYONU ---
-
-def process_cv_analysis(schema, job_details, prompt_template, prompt_score, llm, file_path):
+    **Full Details:**
+    {job['details']}
     """
-    CV dosyasını işler, LLM'e gönderir, JSON'a ayrıştırır ve yapılandırılmış sonucu döndürür.
-    """
+
+    return prompt_text.strip()
+
+  except FileNotFoundError:
+    return "Error: Job file not found"
+
+def process_cv(schema, job_details, prompt_template, prompt_score, llm, file_path):
+
+  if file_path:
     if not os.path.exists(file_path):
       raise FileNotFoundError(f"File not found: {file_path}")
 
-    content = parse_document_to_markdown(file_path) 
+  content = parse_doc(file_path)
 
-    chain = prompt_template | llm
-    
-    output = chain.invoke({
-        "schema": schema, 
-        "resume": content, 
-        "job": job_details, 
-        "prompt_score": prompt_score
-    })
-    
-    raw_response_text = output.content
-    
-    try:
-        # Onarım ve formatlama
-        structured_data = format_result(raw_response_text)
-    except Exception as e:
-        # Kritik JSON ayrıştırma hatası fırlat
-        raise json.JSONDecodeError(f"Kritik JSON Ayrıştırma Hatası: Model çıktısı bozuk. Detay: {e}", raw_response_text, 0)
+  chain = prompt_template | llm
+  output = chain.invoke({"schema": schema, "cv": content, "job": job_details, "prompt_score": prompt_score})
 
-    return structured_data
+  res = format_res(output.content)
+
+  return output, res
+
+
+def display_json_table(path_json):
+  with open(path_json, "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+  df = pd.DataFrame(data)
+  return df

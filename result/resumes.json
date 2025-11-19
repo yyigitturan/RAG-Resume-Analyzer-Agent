@@ -80,5 +80,46 @@
     ],
     "final_recommendations": "While Kandace has an impressive general data science background with significant achievements, there is a substantial gap in the specific LLM and Generative AI expertise required for this specialized Senior Data Scientist role. It is recommended to proceed with an initial screening call to assess her foundational understanding of LLMs, her passion for the domain, and her capacity for rapid upskilling. If she demonstrates strong potential and enthusiasm for this specific area, a technical interview could follow to delve deeper into her problem-solving approach and learning agility. Otherwise, she might be a better fit for a general Senior Data Scientist role without the LLM specialization.",
     "score": 3.5
+  },
+  {
+    "name": "Rahul Malik",
+    "area": "IT",
+    "summary": "NLP Data Scientist with experience in building automated systems for predicting customer behavior, sentiment analysis, and feature selection.",
+    "skills": [
+      "Python",
+      "NumPy",
+      "Pandas",
+      "Scikit-learn",
+      "Keras",
+      "Flask",
+      "SQL",
+      "MySQL",
+      "Postgres",
+      "Git",
+      "Time Series Forecasting",
+      "Productionizing Models",
+      "Recommendation Engines",
+      "Customer Segmentation",
+      "AWS",
+      "NLP"
+    ],
+    "education": "PhD in Natural Language Processing (NLP) from University of Maryland, and B.S. in Statistics from Princeton University.",
+    "interview_questions": [
+      "Can you walk me through your experience with building automated systems for predicting customer behavior?",
+      "How do you approach sentiment analysis when working with large datasets?",
+      "Can you give an example of a time when you had to streamline feature selection for a model?"
+    ],
+    "strengths": [
+      "Relevant experience in NLP and data science",
+      "Strong technical skills in Python, SQL, and AWS"
+    ],
+    "areas_for_development": [
+      "Limited information on specific LLM architectures implemented"
+    ],
+    "important_considerations": [
+      "No direct experience with generative AI research"
+    ],
+    "final_recommendations": "Proceed to interview",
+    "score": 8.5
   }
 ]
